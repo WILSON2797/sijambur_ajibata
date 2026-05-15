@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Desa Sijambur Pardomuan Ajibata</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green-dark: #2d5a27;
+    --green-mid: #4a7c42;
+    --green-soft: #6b9e5e;
+    --green-light: #c8dfc4;
+    --green-pale: #eef5ec;
+    --brown-dark: #5c3d2e;
+    --brown-mid: #8b6347;
+    --brown-light: #c4a882;
+    --brown-pale: #f5ede3;
+    --sky-blue: #7bafc9;
+    --sky-pale: #ddeef5;
+    --white: #ffffff;
+    --off-white: #fafaf8;
+    --gray-100: #f4f4f2;
+    --gray-200: #e8e8e4;
+    --gray-300: #d1d1cc;
+    --gray-500: #8c8c87;
+    --gray-700: #4a4a46;
+    --gray-900: #1e1e1c;
+    --shadow-sm: 0 1px 4px rgba(0,0,0,0.08);
+    --shadow-md: 0 4px 16px rgba(0,0,0,0.10);
+    --shadow-lg: 0 8px 32px rgba(0,0,0,0.13);
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    background: var(--off-white);
+    color: var(--gray-700);
+    line-height: 1.7;
+  }
+
+  h1, h2, h3, h4 { font-family: 'Playfair Display', serif; }
+
+  /* ─── NAVBAR ─── */
+  #navbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    background: rgba(255,255,255,0.97);
+    border-bottom: 1px solid var(--gray-200);
+    box-shadow: var(--shadow-sm);
+    transition: all .3s;
+  }
+  .nav-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 24px; height: 68px;
+  }
+  .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .logo-emblem {
+    width: 46px; height: 46px; background: var(--green-dark);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .logo-emblem svg { width: 26px; height: 26px; fill: #fff; }
+  .logo-text { line-height: 1.2; }
+  .logo-text span:first-child {
+    display: block; font-family: 'Playfair Display', serif;
+    font-size: 14px; font-weight: 700; color: var(--green-dark);
+  }
+  .logo-text span:last-child {
+    display: block; font-size: 11px; color: var(--gray-500); letter-spacing: .5px;
+  }
+  .nav-menu { display: flex; gap: 4px; list-style: none; }
+  .nav-menu a {
+    text-decoration: none; color: var(--gray-700); font-size: 13.5px;
+    font-weight: 500; padding: 8px 14px; border-radius: var(--radius-sm);
+    transition: all .2s; white-space: nowrap;
+  }
+  .nav-menu a:hover { background: var(--green-pale); color: var(--green-dark); }
+  .nav-menu a.active { background: var(--green-dark); color: #fff; }
+  .nav-toggle { display: none; background: none; border: none; cursor: pointer; flex-direction: column; gap: 5px; }
+  .nav-toggle span { display: block; width: 22px; height: 2px; background: var(--gray-700); border-radius: 2px; }
+
+  /* ─── HERO ─── */
+  #hero {
+    margin-top: 68px; position: relative;
+    height: calc(100vh - 68px); min-height: 540px; max-height: 800px;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(to bottom, rgba(20,40,15,.30) 0%, rgba(30,50,20,.55) 60%, rgba(10,25,8,.75) 100%),
+      url('https://images.unsplash.com/photo-1542897644-e34e4e1e6178?w=1400&q=80') center/cover no-repeat;
+  }
+  .hero-content {
+    position: relative; z-index: 2;
+    height: 100%; display: flex; flex-direction: column;
+    justify-content: center; align-items: center; text-align: center;
+    padding: 0 24px;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.3);
+    color: #e8f5e4; font-size: 12px; letter-spacing: 1.5px;
+    text-transform: uppercase; padding: 6px 16px; border-radius: 40px;
+    margin-bottom: 20px; backdrop-filter: blur(4px);
+  }
+  .hero-title {
+    font-size: clamp(28px, 5vw, 54px); color: #fff; font-weight: 700;
+    line-height: 1.18; margin-bottom: 16px; max-width: 700px;
+    text-shadow: 0 2px 12px rgba(0,0,0,.25);
+  }
+  .hero-sub {
+    font-size: clamp(14px, 2vw, 17px); color: rgba(255,255,255,.85);
+    max-width: 500px; margin-bottom: 36px; font-weight: 300;
+  }
+  .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .btn-primary {
+    background: var(--green-dark); color: #fff; border: none;
+    padding: 13px 30px; border-radius: var(--radius-sm); font-size: 14px;
+    font-weight: 600; cursor: pointer; text-decoration: none;
+    transition: all .2s; box-shadow: 0 2px 8px rgba(45,90,39,.4);
+  }
+  .btn-primary:hover { background: #234a1e; transform: translateY(-1px); }
+  .btn-outline {
+    background: transparent; color: #fff;
+    border: 1.5px solid rgba(255,255,255,.6);
+    padding: 13px 30px; border-radius: var(--radius-sm); font-size: 14px;
+    font-weight: 600; cursor: pointer; text-decoration: none;
+    transition: all .2s; backdrop-filter: blur(4px);
+  }
+  .btn-outline:hover { background: rgba(255,255,255,.12); }
+  .hero-stats {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    display: flex; justify-content: center;
+    background: rgba(255,255,255,.96);
+    border-top: 1px solid var(--gray-200);
+  }
+  .stat-item {
+    flex: 1; max-width: 180px; text-align: center;
+    padding: 18px 12px; border-right: 1px solid var(--gray-200);
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; color: var(--green-dark); }
+  .stat-label { font-size: 11px; color: var(--gray-500); text-transform: uppercase; letter-spacing: .8px; margin-top: 2px; }
+
+  /* ─── SECTION BASICS ─── */
+  section { padding: 80px 0; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+  .section-label {
+    font-size: 11.5px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--green-mid); font-weight: 600; text-align: center;
+    margin-bottom: 10px; display: flex; align-items: center;
+    justify-content: center; gap: 10px;
+  }
+  .section-label::before, .section-label::after {
+    content: ''; flex: 1; max-width: 40px; height: 1px; background: var(--green-light);
+  }
+  .section-title {
+    font-size: clamp(22px, 3.5vw, 34px); color: var(--gray-900);
+    text-align: center; margin-bottom: 12px; font-weight: 700;
+  }
+  .section-desc {
+    text-align: center; color: var(--gray-500); max-width: 560px;
+    margin: 0 auto 48px; font-size: 15px; line-height: 1.7;
+  }
+
+  /* ─── TENTANG DESA ─── */
+  #tentang { background: var(--white); }
+  .tentang-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start;
+  }
+  .tentang-img-wrap { position: relative; }
+  .tentang-img {
+    width: 100%; aspect-ratio: 4/3; border-radius: var(--radius-lg);
+    object-fit: cover; box-shadow: var(--shadow-lg);
+    background: url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&q=75') center/cover;
+  }
+  .tentang-badge-img {
+    position: absolute; bottom: -18px; right: -18px;
+    background: var(--green-dark); color: #fff;
+    padding: 16px 22px; border-radius: var(--radius-md);
+    font-family: 'Playfair Display', serif; text-align: center;
+    box-shadow: var(--shadow-md);
+  }
+  .tentang-badge-img .num { font-size: 28px; font-weight: 700; display: block; }
+  .tentang-badge-img .lbl { font-size: 11px; opacity: .85; }
+  .tentang-content { padding-top: 8px; }
+  .tentang-content h3 { font-size: 26px; color: var(--gray-900); margin-bottom: 14px; }
+  .tentang-content p { color: var(--gray-500); margin-bottom: 16px; font-size: 15px; }
+  .visi-misi {
+    background: var(--green-pale); border-left: 3px solid var(--green-mid);
+    padding: 16px 20px; border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    margin: 20px 0;
+  }
+  .visi-misi h4 { font-size: 13px; text-transform: uppercase; letter-spacing: 1px; color: var(--green-dark); margin-bottom: 6px; }
+  .visi-misi p { font-size: 14px; color: var(--gray-700); margin: 0; }
+  .info-row { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 20px; }
+  .info-chip {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--gray-100); padding: 8px 14px;
+    border-radius: 40px; font-size: 13px; color: var(--gray-700);
+  }
+  .info-chip svg { width: 14px; height: 14px; fill: var(--green-mid); flex-shrink: 0; }
+
+  /* ─── WISATA ─── */
+  #wisata { background: var(--gray-100); }
+  .wisata-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .wisata-card {
+    background: var(--white); border-radius: var(--radius-lg);
+    overflow: hidden; box-shadow: var(--shadow-sm);
+    transition: transform .25s, box-shadow .25s;
+  }
+  .wisata-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+  .wisata-card.featured { grid-column: span 1; }
+  .wisata-img {
+    height: 190px; background: center/cover no-repeat;
+    position: relative;
+  }
+  .wisata-tag {
+    position: absolute; top: 12px; left: 12px;
+    background: rgba(255,255,255,.92); color: var(--green-dark);
+    font-size: 11px; font-weight: 600; padding: 4px 10px;
+    border-radius: 20px; text-transform: uppercase; letter-spacing: .8px;
+  }
+  .wisata-body { padding: 18px 20px 20px; }
+  .wisata-body h3 { font-size: 17px; color: var(--gray-900); margin-bottom: 6px; }
+  .wisata-body p { font-size: 13.5px; color: var(--gray-500); line-height: 1.6; }
+  .wisata-meta { display: flex; align-items: center; gap: 6px; margin-top: 12px; font-size: 12px; color: var(--green-mid); font-weight: 500; }
+  .wisata-meta svg { width: 13px; height: 13px; fill: var(--green-mid); }
+
+  /* ─── BERITA ─── */
+  #berita { background: var(--white); }
+  .berita-grid { display: grid; grid-template-columns: 1.6fr 1fr; gap: 28px; }
+  .berita-featured {
+    background: var(--white); border-radius: var(--radius-lg);
+    overflow: hidden; box-shadow: var(--shadow-sm); border: 1px solid var(--gray-200);
+  }
+  .berita-featured-img {
+    height: 240px;
+    background: url('https://images.unsplash.com/photo-1591095408827-65ae9e7db9d3?w=700&q=75') center/cover;
+  }
+  .berita-featured-body { padding: 22px 24px; }
+  .berita-cat {
+    display: inline-block; background: var(--green-pale); color: var(--green-dark);
+    font-size: 11px; font-weight: 600; padding: 3px 10px;
+    border-radius: 20px; text-transform: uppercase; letter-spacing: .8px; margin-bottom: 10px;
+  }
+  .berita-featured-body h3 { font-size: 19px; color: var(--gray-900); margin-bottom: 10px; line-height: 1.4; }
+  .berita-featured-body p { font-size: 14px; color: var(--gray-500); }
+  .berita-date { font-size: 12px; color: var(--gray-500); margin-top: 14px; }
+  .berita-list { display: flex; flex-direction: column; gap: 14px; }
+  .berita-item {
+    display: flex; gap: 14px; background: var(--white);
+    border: 1px solid var(--gray-200); border-radius: var(--radius-md);
+    overflow: hidden; box-shadow: var(--shadow-sm);
+    transition: box-shadow .2s;
+  }
+  .berita-item:hover { box-shadow: var(--shadow-md); }
+  .berita-item-img {
+    width: 90px; flex-shrink: 0;
+    background: center/cover no-repeat;
+  }
+  .berita-item-body { padding: 12px 14px 12px 0; }
+  .berita-item-body .berita-cat { margin-bottom: 6px; }
+  .berita-item-body h4 { font-size: 14px; color: var(--gray-900); line-height: 1.4; margin-bottom: 4px; }
+  .berita-item-body .berita-date { margin: 0; }
+
+  /* ─── UMKM ─── */
+  #umkm { background: var(--brown-pale); }
+  .umkm-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+  .umkm-card {
+    background: var(--white); border-radius: var(--radius-lg);
+    overflow: hidden; box-shadow: var(--shadow-sm);
+    transition: transform .25s, box-shadow .25s;
+  }
+  .umkm-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+  .umkm-img { height: 160px; background: center/cover no-repeat; }
+  .umkm-body { padding: 14px 16px 16px; }
+  .umkm-cat { font-size: 10.5px; color: var(--brown-mid); font-weight: 600; text-transform: uppercase; letter-spacing: .8px; margin-bottom: 4px; }
+  .umkm-body h3 { font-size: 15px; color: var(--gray-900); margin-bottom: 4px; }
+  .umkm-body p { font-size: 12.5px; color: var(--gray-500); }
+
+  /* ─── GALERI 3D CAROUSEL ─── */
+  #galeri { background: var(--gray-100); }
+  .galeri-wrap {
+    position: relative; width: 100%; overflow: hidden; padding: 20px 0 40px;
+    user-select: none;
+  }
+  .galeri-track {
+    display: flex; align-items: center; justify-content: center;
+    gap: 0; transition: none; position: relative; height: 380px;
+  }
+  .galeri-item {
+    position: absolute;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    cursor: pointer;
+    transition: all .45s cubic-bezier(.4,0,.2,1);
+    box-shadow: var(--shadow-lg);
+  }
+  .galeri-item img {
+    width: 100%; height: 100%; object-fit: cover;
+    display: block; pointer-events: none;
+  }
+  .galeri-item-caption {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    background: linear-gradient(transparent, rgba(10,25,8,.82));
+    padding: 40px 18px 18px; color: #fff; transition: all .3s;
+  }
+  .galeri-item-caption h4 { font-size: 15px; font-weight: 700; }
+  .galeri-item-caption p { font-size: 12px; opacity: .85; margin-top: 3px; }
+  .galeri-nav {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    width: 44px; height: 44px; background: var(--white);
+    border-radius: 50%; border: 1px solid var(--gray-200);
+    box-shadow: var(--shadow-md); cursor: pointer; z-index: 10;
+    display: flex; align-items: center; justify-content: center;
+    transition: all .2s; font-size: 18px; color: var(--gray-700);
+  }
+  .galeri-nav:hover { background: var(--green-dark); color: #fff; border-color: var(--green-dark); }
+  .galeri-nav.prev { left: 12px; }
+  .galeri-nav.next { right: 12px; }
+  .galeri-dots {
+    display: flex; justify-content: center; gap: 7px; margin-top: 24px;
+  }
+  .galeri-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--gray-300); cursor: pointer;
+    transition: all .25s;
+  }
+  .galeri-dot.active { background: var(--green-dark); width: 22px; border-radius: 4px; }
+  .galeri-hint {
+    text-align: center; margin-top: 14px;
+    font-size: 13px; color: var(--gray-500);
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--gray-900); color: rgba(255,255,255,.75);
+    padding: 60px 0 0;
+  }
+  .footer-grid {
+    max-width: 1200px; margin: 0 auto; padding: 0 24px;
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1.2fr; gap: 40px;
+  }
+  .footer-brand .logo-text span:first-child { color: var(--green-light) !important; }
+  .footer-brand .logo-text span:last-child { color: rgba(255,255,255,.5); }
+  .footer-desc { font-size: 13.5px; line-height: 1.7; margin: 14px 0; color: rgba(255,255,255,.6); }
+  .footer-socials { display: flex; gap: 10px; margin-top: 4px; }
+  .social-btn {
+    width: 34px; height: 34px; background: rgba(255,255,255,.08);
+    border-radius: var(--radius-sm); display: flex; align-items: center;
+    justify-content: center; text-decoration: none; transition: background .2s;
+    font-size: 14px;
+  }
+  .social-btn:hover { background: var(--green-dark); }
+  .footer-col h4 {
+    font-family: 'Source Sans 3', sans-serif; font-weight: 600;
+    color: #fff; font-size: 13px; text-transform: uppercase;
+    letter-spacing: 1px; margin-bottom: 16px;
+  }
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-links a { color: rgba(255,255,255,.6); text-decoration: none; font-size: 13.5px; transition: color .2s; }
+  .footer-links a:hover { color: var(--green-light); }
+  .footer-contact { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .footer-contact li { display: flex; gap: 10px; font-size: 13px; color: rgba(255,255,255,.6); align-items: flex-start; }
+  .footer-contact li svg { width: 14px; height: 14px; fill: var(--green-soft); flex-shrink: 0; margin-top: 3px; }
+  .jam-row { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 8px; color: rgba(255,255,255,.6); }
+  .jam-label { font-weight: 500; color: rgba(255,255,255,.8); }
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,.08);
+    padding: 18px 24px; margin-top: 40px;
+    max-width: 1200px; margin-left: auto; margin-right: auto;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 12.5px; color: rgba(255,255,255,.4);
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 960px) {
+    .tentang-grid { grid-template-columns: 1fr; gap: 40px; }
+    .tentang-badge-img { bottom: 12px; right: 12px; }
+    .wisata-grid { grid-template-columns: repeat(2, 1fr); }
+    .berita-grid { grid-template-columns: 1fr; }
+    .umkm-grid { grid-template-columns: repeat(2, 1fr); }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 28px; }
+    .footer-brand { grid-column: span 2; }
+  }
+  @media (max-width: 640px) {
+    .nav-menu { display: none; }
+    .nav-toggle { display: flex; }
+    #hero { height: auto; min-height: 480px; }
+    .hero-stats { position: relative; flex-wrap: wrap; }
+    .stat-item { border-right: none; border-bottom: 1px solid var(--gray-200); flex: 0 0 50%; }
+    .wisata-grid { grid-template-columns: 1fr; }
+    .umkm-grid { grid-template-columns: repeat(2, 1fr); }
+    .footer-grid { grid-template-columns: 1fr; }
+    .footer-brand { grid-column: auto; }
+    .footer-bottom { flex-direction: column; gap: 6px; text-align: center; }
+    section { padding: 56px 0; }
+  }
+  .mobile-menu {
+    display: none; position: fixed; top: 68px; left: 0; right: 0;
+    background: #fff; border-bottom: 1px solid var(--gray-200);
+    padding: 12px 24px 16px; z-index: 999;
+    flex-direction: column; gap: 4px;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    text-decoration: none; color: var(--gray-700); padding: 10px 12px;
+    border-radius: var(--radius-sm); font-size: 14.5px; font-weight: 500;
+    transition: background .2s;
+  }
+  .mobile-menu a:hover { background: var(--green-pale); color: var(--green-dark); }
+</style>
+</head>
+<body>
+
+<!-- ─── NAVBAR ─── -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a class="nav-logo" href="#">
+      <div class="logo-emblem">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15v-4H7l5-8v4h4l-5 8z"/>
+        </svg>
+      </div>
+      <div class="logo-text">
+        <span>Sijambur Pardomuan</span>
+        <span>Desa Ajibata · Kab. Toba</span>
+      </div>
+    </a>
+    <ul class="nav-menu">
+      <li><a href="#hero" class="active">Beranda</a></li>
+      <li><a href="#tentang">Profil Desa</a></li>
+      <li><a href="#wisata">Wisata</a></li>
+      <li><a href="#berita">Berita</a></li>
+      <li><a href="#galeri">Galeri</a></li>
+      <li><a href="#umkm">UMKM</a></li>
+      <li><a href="#kontak">Kontak</a></li>
+    </ul>
+    <button class="nav-toggle" onclick="toggleMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#hero" onclick="closeMenu()">Beranda</a>
+    <a href="#tentang" onclick="closeMenu()">Profil Desa</a>
+    <a href="#wisata" onclick="closeMenu()">Wisata</a>
+    <a href="#berita" onclick="closeMenu()">Berita</a>
+    <a href="#galeri" onclick="closeMenu()">Galeri</a>
+    <a href="#umkm" onclick="closeMenu()">UMKM</a>
+    <a href="#kontak" onclick="closeMenu()">Kontak</a>
+  </div>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      Desa Wisata Kabupaten Toba
+    </div>
+    <h1 class="hero-title">Website Resmi Sijambur<br>Pardomuan Ajibata</h1>
+    <p class="hero-sub">Desa asri berpanorama Danau Toba dengan kekayaan alam, budaya Batak yang lestari, dan masyarakat yang terus berkembang.</p>
+    <div class="hero-btns">
+      <a href="#tentang" class="btn-primary">Jelajahi Desa</a>
+      <a href="#wisata" class="btn-outline">Lihat Wisata</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-item"><div class="stat-num">3.842</div><div class="stat-label">Jumlah Penduduk</div></div>
+    <div class="stat-item"><div class="stat-num">847</div><div class="stat-label">Kepala Keluarga</div></div>
+    <div class="stat-item"><div class="stat-num">12</div><div class="stat-label">Dusun / Lingkungan</div></div>
+    <div class="stat-item"><div class="stat-num">5</div><div class="stat-label">Destinasi Wisata</div></div>
+  </div>
+</section>
+
+<!-- ─── TENTANG DESA ─── -->
+<section id="tentang">
+  <div class="container">
+    <div class="section-label">Profil Desa</div>
+    <h2 class="section-title">Mengenal Sijambur Pardomuan</h2>
+    <p class="section-desc">Desa tradisional di tepi Danau Toba dengan warisan budaya Batak yang kaya dan potensi alam yang memukau.</p>
+    <div class="tentang-grid">
+      <div class="tentang-img-wrap">
+        <div class="tentang-img" style="background-image:url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&q=75')"></div>
+        <div class="tentang-badge-img">
+          <span class="num">1952</span>
+          <span class="lbl">Tahun Berdiri</span>
+        </div>
+      </div>
+      <div class="tentang-content">
+        <h3>Sejarah &amp; Identitas Desa</h3>
+        <p>Desa Sijambur Pardomuan terletak di Kecamatan Ajibata, Kabupaten Toba, Provinsi Sumatera Utara. Desa ini berdiri di pesisir barat Danau Toba dengan pemandangan alam yang menakjubkan dan udara pegunungan yang sejuk.</p>
+        <p>Masyarakatnya mayoritas Suku Batak Toba yang menjunjung tinggi nilai adat, gotong royong, dan kearifan lokal yang telah diwariskan turun-temurun sejak generasi ke generasi.</p>
+        <div class="visi-misi">
+          <h4>Visi</h4>
+          <p>Terwujudnya Desa Sijambur Pardomuan yang mandiri, sejahtera, dan berbudaya menuju masyarakat yang adil dan merata.</p>
+        </div>
+        <div class="visi-misi" style="border-color: var(--brown-mid); background: var(--brown-pale);">
+          <h4 style="color:var(--brown-dark)">Misi</h4>
+          <p>Meningkatkan pembangunan infrastruktur, mengembangkan potensi wisata dan UMKM, serta melestarikan budaya Batak dalam bingkai nilai gotong royong.</p>
+        </div>
+        <div class="info-row">
+          <div class="info-chip">
+            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            Kec. Ajibata, Kab. Toba
+          </div>
+          <div class="info-chip">
+            <svg viewBox="0 0 24 24"><path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"/></svg>
+            Luas 2.460 Ha
+          </div>
+          <div class="info-chip">
+            <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+            3.842 Jiwa
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── WISATA ─── -->
+<section id="wisata">
+  <div class="container">
+    <div class="section-label">Destinasi Wisata</div>
+    <h2 class="section-title">Pesona Alam Sijambur</h2>
+    <p class="section-desc">Nikmati keindahan alam dan suasana desa yang masih terjaga keasliannya di Sijambur Pardomuan Ajibata.</p>
+    <div class="wisata-grid">
+      <div class="wisata-card">
+        <div class="wisata-img" style="background-image:url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=500&q=75')">
+          <span class="wisata-tag">Panorama</span>
+        </div>
+        <div class="wisata-body">
+          <h3>Persawahan Hijau</h3>
+          <p>Hamparan sawah bertingkat yang menjadi sumber kehidupan warga desa, indah di kala pagi berkabut.</p>
+          <div class="wisata-meta"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg> ± 2 km dari pusat desa</div>
+        </div>
+      </div>
+      <div class="wisata-card">
+        <div class="wisata-img" style="background-image:url('https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=500&q=75')">
+          <span class="wisata-tag">Air Terjun</span>
+        </div>
+        <div class="wisata-body">
+          <h3>Air Terjun Lestari</h3>
+          <p>Air terjun alami di tengah hutan pinus dengan kolam alami yang menyegarkan, cocok untuk wisata keluarga.</p>
+          <div class="wisata-meta"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg> ± 4 km dari pusat desa</div>
+        </div>
+      </div>
+      <div class="wisata-card">
+        <div class="wisata-img" style="background-image:url('https://images.unsplash.com/photo-1501854140801-50d01698950b?w=500&q=75')">
+          <span class="wisata-tag">Bukit Wisata</span>
+        </div>
+        <div class="wisata-body">
+          <h3>Bukit Panorama Toba</h3>
+          <p>Puncak bukit dengan pemandangan Danau Toba yang luar biasa, tempat terbaik menikmati matahari terbit.</p>
+          <div class="wisata-meta"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg> ± 3.5 km dari pusat desa</div>
+        </div>
+      </div>
+      <div class="wisata-card">
+        <div class="wisata-img" style="background-image:url('https://images.unsplash.com/photo-1486870591958-9b9d0d1dda99?w=500&q=75')">
+          <span class="wisata-tag">Sungai</span>
+        </div>
+        <div class="wisata-body">
+          <h3>Sungai Aek Sijambur</h3>
+          <p>Sungai jernih berbatu yang membelah desa, tempat anak-anak bermain dan warga mencuci di hari cerah.</p>
+          <div class="wisata-meta"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg> ± 1.5 km dari pusat desa</div>
+        </div>
+      </div>
+      <div class="wisata-card">
+        <div class="wisata-img" style="background-image:url('https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=500&q=75')">
+          <span class="wisata-tag">Camping</span>
+        </div>
+        <div class="wisata-body">
+          <h3>Area Camping Pinus</h3>
+          <p>Area berkemah di tengah hutan pinus dengan udara sejuk dan langit malam yang dipenuhi bintang.</p>
+          <div class="wisata-meta"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg> ± 5 km dari pusat desa</div>
+        </div>
+      </div>
+      <div class="wisata-card">
+        <div class="wisata-img" style="background-image:url('https://images.unsplash.com/photo-1542272604-787c3835535d?w=500&q=75')">
+          <span class="wisata-tag">Danau</span>
+        </div>
+        <div class="wisata-body">
+          <h3>Tepian Danau Toba</h3>
+          <p>Pantai danau dengan pasir halus dan air biru jernih. Nikmati sunrise di atas dermaga kayu yang tenang.</p>
+          <div class="wisata-meta"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg> ± 0.8 km dari pusat desa</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── BERITA ─── -->
+<section id="berita">
+  <div class="container">
+    <div class="section-label">Informasi Terkini</div>
+    <h2 class="section-title">Berita &amp; Pengumuman Desa</h2>
+    <p class="section-desc">Ikuti perkembangan terbaru kegiatan dan program pembangunan Desa Sijambur Pardomuan.</p>
+    <div class="berita-grid">
+      <div class="berita-featured">
+        <div class="berita-featured-img"></div>
+        <div class="berita-featured-body">
+          <span class="berita-cat">Pembangunan</span>
+          <h3>Peletakan Batu Pertama Jalan Lingkungan Dusun III Sijambur</h3>
+          <p>Kepala Desa bersama tokoh masyarakat dan perwakilan Pemerintah Kabupaten Toba meresmikan pembangunan jalan cor beton sepanjang 1,2 km yang menghubungkan dusun III ke pusat desa.</p>
+          <div class="berita-date">📅 12 Mei 2025</div>
+        </div>
+      </div>
+      <div class="berita-list">
+        <div class="berita-item">
+          <div class="berita-item-img" style="background-image:url('https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=200&q=70')"></div>
+          <div class="berita-item-body">
+            <span class="berita-cat">Kesehatan</span>
+            <h4>Posyandu Balita Bulan Mei 2025 Dihadiri 148 Peserta</h4>
+            <div class="berita-date">📅 8 Mei 2025</div>
+          </div>
+        </div>
+        <div class="berita-item">
+          <div class="berita-item-img" style="background-image:url('https://images.unsplash.com/photo-1517048676732-d65bc937f952?w=200&q=70')"></div>
+          <div class="berita-item-body">
+            <span class="berita-cat">Musyawarah</span>
+            <h4>Musdes Rencana Kerja Pemerintah Desa (RKPDes) 2026</h4>
+            <div class="berita-date">📅 5 Mei 2025</div>
+          </div>
+        </div>
+        <div class="berita-item">
+          <div class="berita-item-img" style="background-image:url('https://images.unsplash.com/photo-1569163139599-0f4517e36f51?w=200&q=70')"></div>
+          <div class="berita-item-body">
+            <span class="berita-cat">Wisata</span>
+            <h4>Festival Danau Toba 2025: Desa Sijambur Tampil Memukau</h4>
+            <div class="berita-date">📅 1 Mei 2025</div>
+          </div>
+        </div>
+        <div class="berita-item">
+          <div class="berita-item-img" style="background-image:url('https://images.unsplash.com/photo-1490818387583-1baba5e638af?w=200&q=70')"></div>
+          <div class="berita-item-body">
+            <span class="berita-cat">UMKM</span>
+            <h4>Pelatihan Pengolahan Kopi Arabika untuk Petani Desa</h4>
+            <div class="berita-date">📅 25 Apr 2025</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── GALERI 3D CAROUSEL ─── -->
+<section id="galeri">
+  <div class="container">
+    <div class="section-label">Galeri Desa</div>
+    <h2 class="section-title">Keindahan Desa dalam Setiap Momen</h2>
+    <p class="section-desc">Jelajahi potret keindahan alam, kegiatan masyarakat, dan potensi Desa Sijambur Pardomuan.</p>
+  </div>
+  <div class="galeri-wrap">
+    <button class="galeri-nav prev" id="galPrev">&#8249;</button>
+    <div class="galeri-track" id="galTrack"></div>
+    <button class="galeri-nav next" id="galNext">&#8250;</button>
+  </div>
+  <div class="galeri-dots" id="galDots"></div>
+  <div class="galeri-hint">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M9 11.24V7.5C9 6.12 10.12 5 11.5 5S14 6.12 14 7.5v3.74c1.21-.81 2-2.18 2-3.74C16 5.01 13.99 3 11.5 3S7 5.01 7 7.5c0 1.56.79 2.93 2 3.74zm9.84 4.63l-4.54-2.26c-.17-.07-.35-.11-.54-.11H13v-6c0-.83-.67-1.5-1.5-1.5S10 6.67 10 7.5v10.74l-3.43-.72c-.08-.01-.15-.03-.24-.03-.31 0-.59.13-.79.33l-.79.8 4.94 4.94c.27.27.65.44 1.06.44h6.79c.75 0 1.33-.55 1.44-1.28l.75-5.27c.01-.07.02-.14.02-.2 0-.62-.38-1.16-.91-1.38z"/></svg>
+    Geser ke kiri atau kanan untuk melihat galeri lainnya
+  </div>
+</section>
+
+<!-- ─── UMKM ─── -->
+<section id="umkm">
+  <div class="container">
+    <div class="section-label">Ekonomi Desa</div>
+    <h2 class="section-title">UMKM Unggulan Sijambur</h2>
+    <p class="section-desc">Produk lokal berkualitas dari tangan-tangan kreatif warga desa yang terus berkembang dan berdaya saing.</p>
+    <div class="umkm-grid">
+      <div class="umkm-card">
+        <div class="umkm-img" style="background-image:url('https://images.unsplash.com/photo-1498557850523-fd3d118b962e?w=400&q=75')"></div>
+        <div class="umkm-body">
+          <div class="umkm-cat">Pertanian</div>
+          <h3>Kopi Arabika Toba</h3>
+          <p>Kopi premium dari kebun rakyat di lereng bukit dengan ketinggian 1.400 mdpl.</p>
+        </div>
+      </div>
+      <div class="umkm-card">
+        <div class="umkm-img" style="background-image:url('https://images.unsplash.com/photo-1601050690597-df0568f70950?w=400&q=75')"></div>
+        <div class="umkm-body">
+          <div class="umkm-cat">Makanan Khas</div>
+          <h3>Arsik Ikan Mas</h3>
+          <p>Masakan khas Batak berbumbu rempah dengan ikan mas segar dari Danau Toba.</p>
+        </div>
+      </div>
+      <div class="umkm-card">
+        <div class="umkm-img" style="background-image:url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=75')"></div>
+        <div class="umkm-body">
+          <div class="umkm-cat">Pertanian</div>
+          <h3>Beras Merah Organik</h3>
+          <p>Padi organik bebas pestisida dirawat dengan metode tradisional ramah lingkungan.</p>
+        </div>
+      </div>
+      <div class="umkm-card">
+        <div class="umkm-img" style="background-image:url('https://images.unsplash.com/photo-1545205597-3d9d02c29597?w=400&q=75')"></div>
+        <div class="umkm-body">
+          <div class="umkm-cat">Kerajinan</div>
+          <h3>Tenun Ulos Batak</h3>
+          <p>Kain tenun tradisional Batak bermotif khas yang dibuat ibu-ibu warga desa.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer id="kontak">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a class="nav-logo" href="#">
+        <div class="logo-emblem">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15v-4H7l5-8v4h4l-5 8z"/>
+          </svg>
+        </div>
+        <div class="logo-text">
+          <span>Sijambur Pardomuan</span>
+          <span>Desa Ajibata · Kab. Toba</span>
+        </div>
+      </a>
+      <p class="footer-desc">Website resmi Pemerintah Desa Sijambur Pardomuan Ajibata. Melayani masyarakat dengan tulus, transparan, dan bertanggung jawab.</p>
+      <div class="footer-socials">
+        <a class="social-btn" href="#" title="Facebook">📘</a>
+        <a class="social-btn" href="#" title="Instagram">📷</a>
+        <a class="social-btn" href="#" title="YouTube">▶️</a>
+        <a class="social-btn" href="#" title="WhatsApp">💬</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Menu Utama</h4>
+      <ul class="footer-links">
+        <li><a href="#hero">Beranda</a></li>
+        <li><a href="#tentang">Profil Desa</a></li>
+        <li><a href="#wisata">Wisata Desa</a></li>
+        <li><a href="#berita">Berita &amp; Info</a></li>
+        <li><a href="#galeri">Galeri Foto</a></li>
+        <li><a href="#umkm">UMKM</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Layanan</h4>
+      <ul class="footer-links">
+        <li><a href="#">Surat Keterangan</a></li>
+        <li><a href="#">Data Penduduk</a></li>
+        <li><a href="#">APBDes</a></li>
+        <li><a href="#">Pengaduan</a></li>
+        <li><a href="#">BLT Dana Desa</a></li>
+        <li><a href="#">Peta Desa</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Kontak &amp; Jam Layanan</h4>
+      <ul class="footer-contact">
+        <li>
+          <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>
+          Jl. Desa Sijambur No. 1, Ajibata, Kab. Toba, Sumatera Utara 22384
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+          (0625) 41-XXXX
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+          desa.sijambur@tobakab.go.id
+        </li>
+      </ul>
+      <div style="margin-top:16px">
+        <div class="jam-row"><span class="jam-label">Sen – Kam</span><span>08.00 – 15.00</span></div>
+        <div class="jam-row"><span class="jam-label">Jumat</span><span>08.00 – 11.30</span></div>
+        <div class="jam-row"><span class="jam-label">Sabtu – Minggu</span><span>Libur</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Pemerintah Desa Sijambur Pardomuan Ajibata. Hak cipta dilindungi.</span>
+    <span>Dibuat dengan ❤️ untuk kemajuan desa</span>
+  </div>
+</footer>
+
+<script>
+/* ─── GALLERY 3D CAROUSEL ─── */
+const galItems = [
+  { src:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80', title:'Persawahan Hijau', desc:'Hamparan sawah sumber kehidupan warga desa' },
+  { src:'https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=600&q=80', title:'Air Terjun Lestari', desc:'Keindahan air terjun di tengah hutan pinus' },
+  { src:'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=600&q=80', title:'Bukit Panorama', desc:'Pemandangan Danau Toba dari puncak bukit' },
+  { src:'https://images.unsplash.com/photo-1486870591958-9b9d0d1dda99?w=600&q=80', title:'Sungai Jernih', desc:'Sungai alami yang membelah desa' },
+  { src:'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=600&q=80', title:'Gotong Royong Warga', desc:'Semangat kebersamaan masyarakat desa' },
+  { src:'https://images.unsplash.com/photo-1542272604-787c3835535d?w=600&q=80', title:'Tepian Danau Toba', desc:'Panorama danau terbesar di Asia Tenggara' },
+];
+
+let current = 0;
+const track = document.getElementById('galTrack');
+const dotsEl = document.getElementById('galDots');
+
+function buildCarousel() {
+  track.innerHTML = '';
+  dotsEl.innerHTML = '';
+  galItems.forEach((it, i) => {
+    const el = document.createElement('div');
+    el.className = 'galeri-item';
+    el.innerHTML = `<img src="${it.src}" alt="${it.title}" loading="lazy"><div class="galeri-item-caption"><h4>${it.title}</h4><p>${it.desc}</p></div>`;
+    el.addEventListener('click', () => goTo(i));
+    track.appendChild(el);
+    const dot = document.createElement('div');
+    dot.className = 'galeri-dot' + (i === current ? ' active' : '');
+    dot.addEventListener('click', () => goTo(i));
+    dotsEl.appendChild(dot);
+  });
+  layout();
+}
+
+function layout() {
+  const n = galItems.length;
+  const items = track.querySelectorAll('.galeri-item');
+  const dots = dotsEl.querySelectorAll('.galeri-dot');
+  const W = track.parentElement.offsetWidth;
+  const isMobile = W < 640;
+
+  /* sizes per position relative to center */
+  const config = isMobile
+    ? [ {s:.52,o:0,z:1,b:0,blur:0},     // center
+        {s:.38,o:.28,z:0,b:.5,blur:2},   // ±1
+        {s:.26,o:.46,z:0,b:.8,blur:4} ]  // ±2
+    : [ {s:1,o:0,z:5,b:0,blur:0},        // center
+        {s:.72,o:.26,z:4,b:.35,blur:1.5},// ±1
+        {s:.52,o:.44,z:3,b:.6,blur:3},   // ±2
+        {s:.38,o:.56,z:2,b:.8,blur:4} ]; // ±3
+
+  const centerW = isMobile ? W*.52 : W*.38;
+  const centerH = isMobile ? 200 : 340;
+
+  items.forEach((el, i) => {
+    const dist = ((i - current + n) % n);
+    const distSym = dist > n/2 ? dist - n : dist;
+    const absDist = Math.abs(distSym);
+    const side = distSym >= 0 ? 1 : -1;
+    const cfg = config[Math.min(absDist, config.length - 1)];
+
+    const w = centerW * cfg.s;
+    const h = centerH * cfg.s;
+    const xOff = side * cfg.o * W * 0.5;
+    const visible = absDist < config.length;
+
+    el.style.cssText = `
+      width:${w}px; height:${h}px;
+      left:calc(50% - ${w/2}px + ${xOff}px);
+      top:calc(50% - ${h/2}px);
+      z-index:${cfg.z};
+      opacity:${visible ? 1 - cfg.b * 0.6 : 0};
+      filter:blur(${cfg.blur}px);
+      pointer-events:${visible ? 'auto' : 'none'};
+      transition:all .45s cubic-bezier(.4,0,.2,1);
+    `;
+    const cap = el.querySelector('.galeri-item-caption');
+    cap.style.opacity = absDist === 0 ? '1' : '0';
+    cap.style.transition = 'opacity .3s';
+  });
+
+  dots.forEach((d, i) => {
+    d.classList.toggle('active', i === current);
+  });
+}
+
+function goTo(idx) {
+  current = (idx + galItems.length) % galItems.length;
+  layout();
+}
+
+document.getElementById('galPrev').addEventListener('click', () => goTo(current - 1));
+document.getElementById('galNext').addEventListener('click', () => goTo(current + 1));
+
+/* swipe support */
+let startX = 0;
+track.addEventListener('touchstart', e => startX = e.touches[0].clientX, {passive:true});
+track.addEventListener('touchend', e => {
+  const dx = e.changedTouches[0].clientX - startX;
+  if (Math.abs(dx) > 40) goTo(dx < 0 ? current + 1 : current - 1);
+});
+
+/* auto-advance */
+let auto = setInterval(() => goTo(current + 1), 4500);
+track.parentElement.addEventListener('mouseenter', () => clearInterval(auto));
+track.parentElement.addEventListener('mouseleave', () => { auto = setInterval(() => goTo(current + 1), 4500); });
+
+window.addEventListener('resize', layout);
+buildCarousel();
+
+/* ─── NAVBAR SCROLL ─── */
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').style.boxShadow =
+    window.scrollY > 20 ? '0 2px 16px rgba(0,0,0,.12)' : '0 1px 4px rgba(0,0,0,.08)';
+});
+
+/* ─── MOBILE MENU ─── */
+function toggleMenu() { document.getElementById('mobileMenu').classList.toggle('open'); }
+function closeMenu() { document.getElementById('mobileMenu').classList.remove('open'); }
+
+/* ─── ACTIVE NAV ─── */
+const sections = ['hero','tentang','wisata','berita','galeri','umkm','kontak'];
+const navLinks = document.querySelectorAll('.nav-menu a');
+window.addEventListener('scroll', () => {
+  let cur = 'hero';
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && window.scrollY >= el.offsetTop - 100) cur = id;
+  });
+  navLinks.forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + cur);
+  });
+});
+</script>
+</body>
+</html>
