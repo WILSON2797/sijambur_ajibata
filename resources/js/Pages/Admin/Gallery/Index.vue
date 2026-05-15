@@ -46,14 +46,48 @@ const closeModal = () => {
 };
 
 const handleFileChange = (e) => {
+    console.log("File picked:", e.target.files[0]);
     const file = e.target.files[0];
     if (!file) return;
+
+    // Cek ukuran file (Max 15MB)
+    if (file.size > 15 * 1024 * 1024) {
+        Swal.fire({
+            title: 'File Terlalu Besar',
+            text: 'Ukuran foto maksimal adalah 15MB.',
+            icon: 'error',
+            confirmButtonColor: '#1A3D2B',
+        });
+        e.target.value = '';
+        return;
+    }
+
+    Swal.fire({
+        title: 'Memproses Gambar...',
+        text: 'Mohon tunggu sebentar.',
+        allowOutsideClick: false,
+        showConfirmButton: false,
+        didOpen: () => {
+            Swal.showLoading();
+        }
+    });
+
     new Compressor(file, {
         quality: 0.6,
         maxWidth: 1920,
         success(result) {
+            console.log("Compression success:", result);
             form.image = result;
             imagePreview.value = URL.createObjectURL(result);
+            
+            // Berikan jeda sedikit agar user bisa melihat loadingnya
+            setTimeout(() => {
+                Swal.close();
+            }, 800);
+        },
+        error(err) {
+            Swal.close();
+            console.error(err.message);
         }
     });
 };
@@ -129,9 +163,30 @@ const confirmDelete = (id) => {
                             <textarea v-model="form.description" rows="2"></textarea>
                         </div>
                         <div class="form-group">
-                            <label>Gambar</label>
-                            <input type="file" ref="fileInput" accept="image/*" @change="handleFileChange">
-                            <div v-if="imagePreview" class="img-preview"><img :src="imagePreview"></div>
+                            <label>File Gambar</label>
+                            
+                            <div class="upload-container-relative">
+                                <!-- Custom Upload Picker -->
+                                <div v-if="!imagePreview" class="upload-picker">
+                                    <div class="upload-option" @click="$refs.fileInput.removeAttribute('capture'); $refs.fileInput.click()">
+                                        <i class="fa-solid fa-images"></i>
+                                        <span>Galeri</span>
+                                    </div>
+                                    <div class="upload-option" @click="$refs.fileInput.setAttribute('capture', 'environment'); $refs.fileInput.click()">
+                                        <i class="fa-solid fa-camera"></i>
+                                        <span>Kamera</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <input type="file" ref="fileInput" accept="image/*" @change="handleFileChange" style="display: none;">
+                            
+                            <div v-if="imagePreview" class="image-preview-container">
+                                <img :src="imagePreview" alt="Preview">
+                                <button type="button" class="remove-img-btn" @click="imagePreview = null; form.image = null">
+                                    <i class="fa-solid fa-xmark"></i>
+                                </button>
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn-cancel" @click="closeModal">Batal</button>
@@ -145,29 +200,97 @@ const confirmDelete = (id) => {
 </template>
 
 <style scoped>
-.card { background: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); overflow: hidden; }
-.card-header { padding: 1.5rem 2rem; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; }
-.btn-create { padding: 0.7rem 1.5rem; background: #1A3D2B; color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; }
-.gallery-grid-admin { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1.5rem; padding: 2rem; }
-.gallery-card-admin { background: #f8fafc; border-radius: 12px; overflow: hidden; border: 1px solid #e2e8f0; transition: transform 0.2s; }
-.gallery-card-admin:hover { transform: translateY(-4px); }
-.gallery-img-admin { width: 100%; height: 150px; object-fit: cover; }
-.gallery-info-admin { padding: 1rem; }
-.gallery-info-admin h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.5rem; color: #1e293b; }
-.gallery-actions-admin { display: flex; justify-content: space-between; margin-top: 1rem; border-top: 1px solid #e2e8f0; padding-top: 0.5rem; }
-.btn-icon { background: none; border: none; font-size: 0.85rem; font-weight: 600; color: #1A3D2B; cursor: pointer; }
-.btn-danger-text { color: #ef4444; }
-.modal-backdrop { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 100; }
-.modal-content { background: white; width: 100%; max-width: 500px; border-radius: 12px; max-height: 90vh; overflow-y: auto; }
-.modal-header { padding: 1.5rem; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; }
-.modal-body { padding: 1.5rem; }
-.form-group { margin-bottom: 1rem; display: flex; flex-direction: column; gap: 0.5rem; }
-.form-group input, .form-group textarea { padding: 0.7rem; border: 1px solid #cbd5e1; border-radius: 8px; }
-.img-preview img { max-height: 200px; width: 100%; object-fit: cover; margin-top: 0.5rem; border-radius: 8px; }
-.modal-footer { display: flex; justify-content: flex-end; gap: 1rem; margin-top: 1.5rem; }
-.btn-save { background: #1A3D2B; color: white; padding: 0.7rem 2rem; border: none; border-radius: 8px; cursor: pointer; }
-.badge { padding: 0.2rem 0.5rem; background: #e2e8f0; border-radius: 4px; font-size: 0.75rem; color: #475569; }
-.text-center { text-align: center; }
-.py-5 { padding-top: 3rem; padding-bottom: 3rem; }
-.w-full { grid-column: 1 / -1; }
+.card-header { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 1rem; 
+}
+
+@media (min-width: 640px) {
+    .card-header {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+}
+
+.gallery-grid-admin { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); 
+    gap: 1.25rem; 
+    padding: 1.5rem; 
+}
+
+.gallery-card-admin { 
+    background: white; 
+    border-radius: 16px; 
+    overflow: hidden; 
+    border: 1px solid #e2e8f0; 
+    transition: all 0.3s ease; 
+}
+
+.gallery-card-admin:hover { 
+    transform: translateY(-4px); 
+    box-shadow: 0 12px 20px rgba(0,0,0,0.06);
+}
+
+.gallery-img-admin { 
+    width: 100%; 
+    height: 140px; 
+    object-fit: cover; 
+}
+
+.gallery-info-admin { 
+    padding: 1rem; 
+}
+
+.gallery-info-admin h3 { 
+    font-size: 0.9rem; 
+    font-weight: 700; 
+    margin-bottom: 0.5rem; 
+    color: #1e293b; 
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.gallery-actions-admin { 
+    display: flex; 
+    justify-content: space-between; 
+    margin-top: 1rem; 
+    border-top: 1px solid #f1f5f9; 
+    padding-top: 0.75rem; 
+}
+
+.btn-icon { 
+    background: none; 
+    border: none; 
+    font-size: 0.8rem; 
+    font-weight: 700; 
+    color: #1A3D2B; 
+    cursor: pointer; 
+    transition: color 0.2s;
+}
+
+.btn-danger-text { 
+    color: #ef4444; 
+}
+
+.img-preview img { 
+    max-height: 200px; 
+    width: 100%; 
+    object-fit: cover; 
+    margin-top: 0.75rem; 
+    border-radius: 12px; 
+    border: 1px solid #e2e8f0;
+}
+
+.badge { 
+    padding: 0.25rem 0.6rem; 
+    background: #f1f5f9; 
+    border-radius: 6px; 
+    font-size: 0.7rem; 
+    color: #64748b; 
+    font-weight: 600;
+}
 </style>

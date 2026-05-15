@@ -53,17 +53,47 @@ const closeModal = () => {
 
 // Handle file change and compress
 const handleFileChange = (e) => {
+    console.log("File picked:", e.target.files[0]);
     const file = e.target.files[0];
     if (!file) return;
+
+    // Cek ukuran file (Max 15MB)
+    if (file.size > 15 * 1024 * 1024) {
+        Swal.fire({
+            title: 'File Terlalu Besar',
+            text: 'Ukuran foto maksimal adalah 15MB.',
+            icon: 'error',
+            confirmButtonColor: '#1A3D2B',
+        });
+        e.target.value = '';
+        return;
+    }
+
+    Swal.fire({
+        title: 'Memproses Gambar...',
+        text: 'Mohon tunggu sebentar.',
+        allowOutsideClick: false,
+        showConfirmButton: false,
+        didOpen: () => {
+            Swal.showLoading();
+        }
+    });
 
     new Compressor(file, {
         quality: 0.6, // Compress quality to 60%
         maxWidth: 1920,
         success(result) {
+            console.log("Compression success:", result);
             form.image = result;
             imagePreview.value = URL.createObjectURL(result);
+            
+            // Berikan jeda sedikit agar user bisa melihat loadingnya
+            setTimeout(() => {
+                Swal.close();
+            }, 800);
         },
         error(err) {
+            Swal.close();
             console.error(err.message);
         },
     });
@@ -188,12 +218,30 @@ const confirmDelete = (id) => {
 
                         <div class="form-group">
                             <label>Gambar Thumbnail (Otomatis Kompresi)</label>
-                            <input type="file" ref="fileInput" accept="image/*" @change="handleFileChange" :required="!editingNews">
-                            <span class="error" v-if="form.errors.image">{{ form.errors.image }}</span>
                             
-                            <div v-if="imagePreview" class="img-preview">
-                                <img :src="imagePreview" alt="Preview">
+                            <div class="upload-container-relative">
+                                <!-- Custom Upload Picker -->
+                                <div v-if="!imagePreview" class="upload-picker">
+                                    <div class="upload-option" @click="$refs.fileInput.removeAttribute('capture'); $refs.fileInput.click()">
+                                        <i class="fa-solid fa-images"></i>
+                                        <span>Galeri</span>
+                                    </div>
+                                    <div class="upload-option" @click="$refs.fileInput.setAttribute('capture', 'environment'); $refs.fileInput.click()">
+                                        <i class="fa-solid fa-camera"></i>
+                                        <span>Kamera</span>
+                                    </div>
+                                </div>
                             </div>
+
+                            <input type="file" ref="fileInput" accept="image/*" @change="handleFileChange" style="display: none;" :required="!editingNews">
+                            
+                            <div v-if="imagePreview" class="image-preview-container">
+                                <img :src="imagePreview" alt="Preview">
+                                <button type="button" class="remove-img-btn" @click="imagePreview = null; form.image = null">
+                                    <i class="fa-solid fa-xmark"></i>
+                                </button>
+                            </div>
+                            <span class="error" v-if="form.errors.image">{{ form.errors.image }}</span>
                         </div>
 
                         <div class="modal-footer">
@@ -210,284 +258,67 @@ const confirmDelete = (id) => {
 </template>
 
 <style scoped>
-.card {
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
-    overflow: hidden;
+.card-header { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 1rem; 
 }
 
-.card-header {
-    padding: 1.5rem 2rem;
-    border-bottom: 1px solid #e2e8f0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 1rem;
+@media (min-width: 640px) {
+    .card-header {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
 }
 
-.header-content h2 {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: #1e293b;
+.table-img { 
+    width: 50px; 
+    height: 50px; 
+    object-fit: cover; 
+    border-radius: 8px; 
 }
 
-.header-content p {
-    color: #64748b;
-    font-size: 0.9rem;
-    margin-top: 0.25rem;
-}
-
-.btn-create {
-    padding: 0.75rem 1.5rem;
-    background: #1A3D2B;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
+.btn-action { 
+    padding: 0.4rem 0.8rem; 
+    background: #f8fafc; 
+    border: 1px solid #e2e8f0; 
+    border-radius: 8px; 
+    cursor: pointer; 
+    font-size: 0.85rem;
+    font-weight: 500;
     transition: all 0.2s;
 }
 
-.btn-create:hover {
-    background: #A3B899;
-    color: #1A3D2B;
-}
-
-.table-responsive {
-    overflow-x: auto;
-}
-
-.admin-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.admin-table th {
-    background: #f8fafc;
-    text-align: left;
-    padding: 1rem 2rem;
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: #64748b;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    border-bottom: 1px solid #e2e8f0;
-}
-
-.admin-table td {
-    padding: 1.2rem 2rem;
-    border-bottom: 1px solid #e2e8f0;
-    vertical-align: middle;
-}
-
-.table-img {
-    width: 60px;
-    height: 60px;
-    object-fit: cover;
-    border-radius: 8px;
-}
-
-.font-medium {
-    font-weight: 600;
-    color: #334155;
-}
-
-.text-gray {
-    color: #64748b;
-    font-size: 0.85rem;
-    margin-top: 0.25rem;
-}
-
-.truncate-text {
-    max-width: 300px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.text-right { text-align: right !important; }
-.text-center { text-align: center !important; }
-.py-4 { padding-top: 2rem !important; padding-bottom: 2rem !important; }
-
-.btn-action {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.5rem 1rem;
-    background: #f1f5f9;
-    color: #334155;
-    font-size: 0.85rem;
-    font-weight: 600;
-    border-radius: 6px;
-    border: 1px solid #cbd5e1;
-    cursor: pointer;
-    margin-left: 0.5rem;
-    transition: all 0.2s;
-}
-
-.btn-action:hover {
-    background: #e2e8f0;
-}
-
-.btn-danger {
-    background: #fef2f2;
-    color: #ef4444;
-    border-color: #fca5a5;
+.btn-danger { 
+    color: #ef4444; 
+    border-color: #fee2e2; 
 }
 
 .btn-danger:hover {
     background: #fee2e2;
 }
 
-/* Modal Styles */
-.modal-backdrop {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 100;
-    padding: 1rem;
+.truncate-text {
+    max-width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #64748b;
+    font-size: 0.8rem;
 }
 
-.modal-content {
-    background: white;
-    width: 100%;
-    max-width: 700px;
-    border-radius: 12px;
-    box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
-    max-height: 90vh;
-    display: flex;
-    flex-direction: column;
-}
-
-.modal-header {
-    padding: 1.5rem 2rem;
-    border-bottom: 1px solid #e2e8f0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.modal-header h2 {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: #1e293b;
-    margin: 0;
-}
-
-.close-btn {
-    background: transparent;
-    border: none;
-    font-size: 1.5rem;
-    color: #94a3b8;
-    cursor: pointer;
-    transition: color 0.2s;
-}
-
-.close-btn:hover {
-    color: #ef4444;
-}
-
-.modal-body {
-    padding: 2rem;
-    overflow-y: auto;
-}
-
-.form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    margin-bottom: 1.5rem;
-}
-
-.form-group label {
-    font-weight: 600;
-    color: #334155;
-    font-size: 0.9rem;
-}
-
-.form-group input[type="text"], 
-.form-group input[type="date"], 
-.form-group textarea {
-    padding: 0.75rem 1rem;
-    border: 1px solid #cbd5e1;
-    border-radius: 8px;
-    font-family: inherit;
-    font-size: 1rem;
-    color: #1e293b;
-    background: #f8fafc;
-    transition: all 0.2s;
-}
-
-.form-group input:focus, 
-.form-group textarea:focus {
-    outline: none;
-    border-color: #A3B899;
-    background: white;
-    box-shadow: 0 0 0 3px rgba(163, 184, 153, 0.2);
-}
-
-.img-preview {
-    margin-top: 1rem;
-}
-
-.img-preview img {
-    max-height: 150px;
-    border-radius: 8px;
-    object-fit: cover;
+.img-preview img { 
+    max-width: 100%; 
+    max-height: 200px; 
+    margin-top: 0.75rem; 
+    border-radius: 12px; 
+    border: 1px solid #e2e8f0;
 }
 
 .error {
     color: #ef4444;
-    font-size: 0.8rem;
-}
-
-.modal-footer {
-    display: flex;
-    justify-content: flex-end;
-    gap: 1rem;
-    margin-top: 2rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid #e2e8f0;
-}
-
-.btn-cancel {
-    padding: 0.75rem 1.5rem;
-    background: white;
-    color: #475569;
-    border: 1px solid #cbd5e1;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-.btn-cancel:hover {
-    background: #f8fafc;
-    color: #1e293b;
-}
-
-.btn-save {
-    padding: 0.75rem 2rem;
-    background: #1A3D2B;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-.btn-save:hover {
-    background: #0f241a;
-}
-
-.btn-save:disabled {
-    opacity: 0.7;
-    cursor: not-allowed;
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
 }
 </style>

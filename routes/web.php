@@ -26,6 +26,10 @@ Route::middleware('auth')->group(function () {
     
     // Admin CMS Routes
     Route::prefix('admin')->name('admin.')->group(function () {
+        Route::get('/', function () {
+            return redirect()->route('admin.dashboard');
+        });
+
         Route::get('/dashboard', function () {
             return inertia('Admin/Dashboard');
         })->name('dashboard');
