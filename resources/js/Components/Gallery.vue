@@ -28,11 +28,11 @@ const setIndex = (index) => {
 <template>
     <section id="gallery" class="gallery-section">
         <div class="gallery-header">
-            <p class="section-tag reveal">Koleksi Visual</p>
-            <h2 class="section-title reveal reveal-delay-1">Galeri <em>Foto Desa</em></h2>
+            <p class="section-tag" data-aos="fade-up">Koleksi Visual</p>
+            <h2 class="section-title" data-aos="fade-up" data-aos-delay="100">Galeri <em>Foto Desa</em></h2>
         </div>
 
-        <div class="carousel-container reveal reveal-delay-2">
+        <div class="carousel-container" data-aos="fade-up" data-aos-delay="200">
             <button class="carousel-nav-btn prev" @click.stop="prev" aria-label="Previous slide">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><path d="M15 18l-6-6 6-6"/></svg>
             </button>
@@ -67,7 +67,7 @@ const setIndex = (index) => {
             </button>
         </div>
 
-        <div class="carousel-footer reveal reveal-delay-3">
+        <div class="carousel-footer" data-aos="fade-up" data-aos-delay="300">
             <div class="dots">
                 <span v-for="(_, index) in items" :key="index" 
                       class="dot" 

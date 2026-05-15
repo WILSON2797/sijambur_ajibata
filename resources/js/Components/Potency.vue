@@ -14,12 +14,12 @@ defineProps({
     <section id="potensi">
         <div class="potensi-head">
             <div>
-                <p class="section-tag reveal">Yang Kami Miliki</p>
-                <h2 class="section-title reveal reveal-delay-1">Potensi <em>Unggulan Desa</em></h2>
+                <p class="section-tag" data-aos="fade-up">Yang Kami Miliki</p>
+                <h2 class="section-title" data-aos="fade-up" data-aos-delay="100">Potensi <em>Unggulan Desa</em></h2>
             </div>
-            <Link v-if="showViewAll" :href="route('potency')" class="view-all-link reveal">Lihat Semua ↗</Link>
+            <Link v-if="showViewAll" :href="route('potency')" class="view-all-link" data-aos="fade-up">Lihat Semua ↗</Link>
         </div>
-        <div class="potensi-grid reveal reveal-delay-1">
+        <div class="potensi-grid" data-aos="fade-up" data-aos-delay="200">
             <div v-for="pot in potencies" :key="pot.id" 
                  class="pot-card" 
                  :class="{ 'featured': pot.is_featured }">

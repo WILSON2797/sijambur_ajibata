@@ -7,10 +7,10 @@ defineProps({
 <template>
     <section id="kontak">
         <div>
-            <p class="section-tag reveal">Hubungi Kami</p>
-            <h2 class="section-title reveal reveal-delay-1">Kantor Desa<br><em>Siap Melayani</em></h2>
-            <p class="section-body reveal reveal-delay-2">Kami terbuka untuk pertanyaan, kunjungan, dan kerjasama. Perangkat desa siap melayani dengan sepenuh hati.</p>
-            <div class="kontak-card reveal reveal-delay-3">
+            <p class="section-tag" data-aos="fade-up">Hubungi Kami</p>
+            <h2 class="section-title" data-aos="fade-up" data-aos-delay="100">Kantor Desa<br><em>Siap Melayani</em></h2>
+            <p class="section-body" data-aos="fade-up" data-aos-delay="200">Kami terbuka untuk pertanyaan, kunjungan, dan kerjasama. Perangkat desa siap melayani dengan sepenuh hati.</p>
+            <div class="kontak-card" data-aos="fade-up" data-aos-delay="300">
                 <div class="kontak-detail">
                     <div class="kontak-row">
                         <div class="kontak-icon">
@@ -39,7 +39,7 @@ defineProps({
                 </div>
             </div>
         </div>
-        <div class="reveal reveal-delay-2">
+        <div data-aos="fade-up" data-aos-delay="200">
             <p class="section-tag">Kirim Pesan</p>
             <h3 class="kontak-subtitle">Ada yang ingin ditanyakan?</h3>
             <p class="kontak-hint">Tim kami akan merespons dalam 1×24 jam kerja.</p>

@@ -15,6 +15,13 @@
   --border: rgba(45, 106, 79, 0.12);
 }
 
+html,
+body {
+  overflow-x: hidden;
+  position: relative;
+  width: 100%;
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -23,7 +30,6 @@ body {
   font-family: 'Plus Jakarta Sans', sans-serif;
   background: var(--white);
   color: var(--text-dark);
-  overflow-x: hidden;
 }
 
 ::-webkit-scrollbar {
@@ -190,8 +196,6 @@ nav.scrolled .nav-links a:hover {
   text-transform: uppercase;
   color: white;
   margin-bottom: 1.5rem;
-  opacity: 0;
-  animation: fadeUp 0.8s 0.2s forwards;
 }
 
 .hero-badge::before {
@@ -209,8 +213,6 @@ nav.scrolled .nav-links a:hover {
   line-height: 1.0;
   color: white;
   margin-bottom: 1rem;
-  opacity: 0;
-  animation: fadeUp 0.9s 0.4s forwards;
 }
 
 .hero-title em {
@@ -225,16 +227,12 @@ nav.scrolled .nav-links a:hover {
   line-height: 1.78;
   max-width: 460px;
   margin-bottom: 2.5rem;
-  opacity: 0;
-  animation: fadeUp 0.9s 0.6s forwards;
 }
 
 .hero-actions {
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
-  opacity: 0;
-  animation: fadeUp 0.9s 0.8s forwards;
 }
 
 .btn-primary {
@@ -280,8 +278,6 @@ nav.scrolled .nav-links a:hover {
   flex-direction: column;
   gap: 1rem;
   z-index: 2;
-  opacity: 0;
-  animation: fadeIn 1s 1.2s forwards;
 }
 
 .hero-stat {
@@ -318,8 +314,6 @@ nav.scrolled .nav-links a:hover {
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
-  opacity: 0;
-  animation: fadeIn 1s 1.4s forwards;
 }
 
 .hero-scroll-hint span {
@@ -1979,32 +1973,60 @@ nav.menu-open .nav-logo-text span {
   stroke: var(--green-fresh);
 }
 
-/* REVEAL */
-.reveal {
+/* REVEAL UTILITIES - Transitioned to AOS */
+.reveal-hidden {
   opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
+  transform: translateY(20px);
 }
 
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
+/* Fix for AOS overflow on mobile */
+body, html {
+  overflow-x: hidden !important;
 }
 
-.reveal-delay-1 {
-  transition-delay: 0.1s;
+[data-aos] {
+  pointer-events: none;
 }
 
-.reveal-delay-2 {
-  transition-delay: 0.2s;
+[data-aos].aos-animate {
+  pointer-events: auto;
 }
 
-.reveal-delay-3 {
-  transition-delay: 0.3s;
+/* IMAGE PLACEHOLDERS & SHIMMER */
+@keyframes shimmer {
+  0% { background-position: -468px 0; }
+  100% { background-position: 468px 0; }
 }
 
-.reveal-delay-4 {
-  transition-delay: 0.4s;
+.img-placeholder {
+  background: #f6f7f8;
+  background-image: linear-gradient(to right, #f6f7f8 0%, #edeef1 20%, #f6f7f8 40%, #f6f7f8 100%);
+  background-repeat: no-repeat;
+  background-size: 800px 104px;
+  animation: shimmer 1.5s linear infinite forwards;
+}
+
+/* Apply placeholders to common image wrappers */
+.pot-card-img-wrap, 
+.wisata-img-side, 
+.slide-inner, 
+.about-images div, 
+.berita-main-overflow, 
+.berita-item,
+.aparatur-photo {
+  background-color: var(--green-pale); /* Fallback color */
+  position: relative;
+  overflow: hidden;
+}
+
+/* Specific styling for lazy images to ensure they have a "base" state */
+img[loading="lazy"] {
+  background: var(--green-pale);
+  transition: opacity 0.5s ease;
+}
+
+img[loading="lazy"]:not([src]) {
+  opacity: 0;
 }
 
 /* ANIMATIONS */
