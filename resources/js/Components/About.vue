@@ -17,12 +17,12 @@ defineProps({
             </div>
         </div>
         <div class="about-images reveal reveal-delay-2">
-            <img class="about-img-a" :src="images[0]" alt="Danau Toba">
+            <img loading="lazy" class="about-img-a" :src="images[0]" alt="Danau Toba">
             <div class="about-img-wrap">
-                <img class="about-img-b" :src="images[1]" alt="Desa">
+                <img loading="lazy" class="about-img-b" :src="images[1]" alt="Desa">
                 <span class="about-img-label">📍 Tepi Danau Toba</span>
             </div>
-            <img class="about-img-c" :src="images[2]" alt="Pertanian">
+            <img loading="lazy" class="about-img-c" :src="images[2]" alt="Pertanian">
         </div>
     </section>
 </template>

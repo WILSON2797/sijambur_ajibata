@@ -26,7 +26,7 @@ const formatDate = (dateStr) => {
         </div>
         <div class="berita-grid">
             <div class="berita-main reveal" v-if="mainNews">
-                <div class="berita-main-overflow"><img :src="mainNews.image" :alt="mainNews.title"></div>
+                <div class="berita-main-overflow"><img loading="lazy" :src="mainNews.image" :alt="mainNews.title"></div>
                 <div class="berita-body-main">
                     <p class="berita-date">{{ formatDate(mainNews.published_at) }}</p>
                     <h3 class="berita-title">{{ mainNews.title }}</h3>
@@ -38,7 +38,7 @@ const formatDate = (dateStr) => {
                 <div v-for="(item, index) in sideNews" :key="item.id" 
                      class="berita-item reveal" 
                      :class="'reveal-delay-' + (index + 1)">
-                    <img :src="item.image" :alt="item.title">
+                    <img loading="lazy" :src="item.image" :alt="item.title">
                     <div>
                         <p class="berita-date">{{ formatDate(item.published_at) }}</p>
                         <h3 class="berita-title">{{ item.title }}</h3>

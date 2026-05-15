@@ -19,7 +19,7 @@ onMounted(() => {
 
 <template>
     <div class="parallax-1">
-        <div class="p1-bg" ref="p1Bg"></div>
+        <div class="p1-bg" ref="p1Bg" :style="{ '--p-url': `url(${content?.image})` }"></div>
         <div class="p1-content">
             <span class="p1-leaf">🌿</span>
             <blockquote>"{{ content?.content }}"</blockquote>

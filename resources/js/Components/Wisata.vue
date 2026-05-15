@@ -15,7 +15,7 @@ defineProps({
         <div class="wisata-container">
             <div v-for="(dest, index) in destinations" :key="index" class="wisata-item reveal" :class="'reveal-delay-' + (index % 2)">
                 <div class="wisata-img-side">
-                    <img :src="dest.image" :alt="dest.name">
+                    <img loading="lazy" :src="dest.image" :alt="dest.name">
                     <div class="wisata-badge">Must Visit</div>
                 </div>
                 <div class="wisata-info-side">

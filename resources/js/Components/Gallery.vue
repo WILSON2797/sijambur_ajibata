@@ -1,22 +1,23 @@
 <script setup>
 import { ref, computed } from 'vue';
 
-const activeIndex = ref(2);
+const props = defineProps({
+    items: {
+        type: Array,
+        default: () => []
+    }
+});
 
-const items = [
-    { title: 'Bukit Panorama', desc: 'Pemandangan Danau Toba dari puncak bukit', image: 'https://images.unsplash.com/photo-1596402184320-417e7178b2cd?w=1200&q=90' },
-    { title: 'Tepi Danau', desc: 'Suasana tenang di pinggiran desa Pardomuan', image: 'https://images.unsplash.com/photo-1602867741746-6df80f40b3f6?w=1200&q=90' },
-    { title: 'Sawah Hijau', desc: 'Hamparan sawah subur di kaki bukit', image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&q=90' },
-    { title: 'Budaya Lokal', desc: 'Pelestarian adat dan tradisi Batak Toba', image: 'https://images.unsplash.com/photo-1609221382720-8a8f1fbf6de3?w=1200&q=90' },
-    { title: 'Senja di Desa', desc: 'Momen matahari terbenam yang memukau', image: 'https://images.unsplash.com/photo-1548514814-ea62ef1c9e94?w=1200&q=90' },
-];
+const activeIndex = ref(0);
 
 const next = () => {
-    activeIndex.value = (activeIndex.value + 1) % items.length;
+    if (props.items.length === 0) return;
+    activeIndex.value = (activeIndex.value + 1) % props.items.length;
 };
 
 const prev = () => {
-    activeIndex.value = (activeIndex.value - 1 + items.length) % items.length;
+    if (props.items.length === 0) return;
+    activeIndex.value = (activeIndex.value - 1 + props.items.length) % props.items.length;
 };
 
 const setIndex = (index) => {
@@ -36,26 +37,29 @@ const setIndex = (index) => {
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><path d="M15 18l-6-6 6-6"/></svg>
             </button>
             
-            <div class="slides-wrapper">
-                <div v-for="(item, index) in items" :key="index" 
+            <div class="slides-wrapper" v-if="props.items && props.items.length > 0">
+                <div v-for="(item, index) in props.items" :key="index" 
                      class="slide" 
                      @click="setIndex(index)"
                      :class="{ 
                          'active': index === activeIndex,
-                         'prev-slide': index === (activeIndex - 1 + items.length) % items.length,
-                         'next-slide': index === (activeIndex + 1) % items.length,
-                         'far-prev': index === (activeIndex - 2 + items.length) % items.length,
-                         'far-next': index === (activeIndex + 2) % items.length,
-                         'hidden': Math.abs(index - activeIndex) > 2 && Math.abs(index - activeIndex) < items.length - 2
+                         'prev-slide': props.items.length > 1 && index === (activeIndex - 1 + props.items.length) % props.items.length,
+                         'next-slide': props.items.length > 1 && index === (activeIndex + 1) % props.items.length,
+                         'far-prev': props.items.length > 2 && index === (activeIndex - 2 + props.items.length) % props.items.length,
+                         'far-next': props.items.length > 2 && index === (activeIndex + 2) % props.items.length,
+                         'hidden': props.items.length > 5 && Math.abs(index - activeIndex) > 2 && Math.abs(index - activeIndex) < props.items.length - 2
                      }">
                     <div class="slide-inner">
-                        <img :src="item.image" :alt="item.title">
+                        <img loading="lazy" :src="item.image" :alt="item.title">
                         <div class="slide-content" v-if="index === activeIndex">
                             <h3>{{ item.title }}</h3>
-                            <p>{{ item.desc }}</p>
+                            <p>{{ item.description }}</p>
                         </div>
                     </div>
                 </div>
+            </div>
+            <div v-else class="empty-gallery">
+                <p>Belum ada koleksi foto.</p>
             </div>
 
             <button class="carousel-nav-btn next" @click.stop="next" aria-label="Next slide">

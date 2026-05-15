@@ -9,5 +9,5 @@ class Potency extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'description', 'tag', 'image', 'is_featured'];
+    protected $fillable = ['title', 'slug', 'description', 'tag', 'image', 'is_featured'];
 }

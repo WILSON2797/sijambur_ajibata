@@ -6,8 +6,6 @@ use Illuminate\Database\Seeder;
 use App\Models\PageContent;
 use App\Models\Potency;
 use App\Models\News;
-use App\Models\VillageOfficial;
-use App\Models\Service;
 use App\Models\Agenda;
 use App\Models\VillageSetting;
 
@@ -83,35 +81,6 @@ class WebsiteSeeder extends Seeder
             'excerpt' => 'Pembangunan jalan akses utama untuk mempermudah transportasi warga dan wisatawan.',
             'image' => 'https://images.unsplash.com/photo-1593118247619-e2d6f056869e?w=200&q=80',
             'published_at' => '2025-05-03'
-        ]);
-
-        // 4. Officials
-        VillageOfficial::create([
-            'name' => 'Bapak Marojahan Situmorang',
-            'position' => 'Kepala Desa',
-            'description' => 'Memimpin desa dengan visi "Pardomuan Maju, Warga Sejahtera" dan komitmen kuat terhadap pelestarian budaya lokal.',
-            'photo' => 'https://i.pravatar.cc/150?img=52',
-            'order' => 1
-        ]);
-
-        VillageOfficial::create([
-            'name' => 'Ibu Rosmelda Sinaga',
-            'position' => 'Sekretaris Desa',
-            'photo' => 'https://i.pravatar.cc/150?img=57',
-            'order' => 2
-        ]);
-
-        // 5. Services
-        Service::create([
-            'name' => 'Surat Keterangan Domisili',
-            'description' => 'Penerbitan surat keterangan tempat tinggal untuk keperluan administrasi resmi.',
-            'icon' => 'document'
-        ]);
-
-        Service::create([
-            'name' => 'Surat Ket. Tidak Mampu',
-            'description' => 'Untuk kebutuhan beasiswa, BPJS, dan program bantuan sosial lainnya.',
-            'icon' => 'users'
         ]);
 
         // 6. Agendas

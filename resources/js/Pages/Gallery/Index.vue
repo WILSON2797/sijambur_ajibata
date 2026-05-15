@@ -2,6 +2,10 @@
 import { Head } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import Gallery from '@/Components/Gallery.vue';
+
+defineProps({
+    items: Array
+});
 </script>
 
 <template>
@@ -14,7 +18,7 @@ import Gallery from '@/Components/Gallery.vue';
         </div>
 
         <section class="section-padding-default bg-white">
-            <Gallery />
+            <Gallery :items="items" />
         </section>
     </AppLayout>
 </template>

@@ -18,7 +18,7 @@ defineProps({
         </div>
 
         <section class="section-padding-default bg-white">
-            <Potency :potencies="potencies" />
+            <Potency :potencies="potencies" :show-view-all="false" />
         </section>
     </AppLayout>
 </template>

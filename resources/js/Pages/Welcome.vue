@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted } from 'vue';
+import { onMounted, computed } from 'vue';
 import { Head, Link } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import Hero from '@/Components/Hero.vue';
@@ -25,6 +25,7 @@ const props = defineProps({
     news: Array,
     umkm: Array,
     wisata: Array,
+    gallery: Array,
     agendas: Array,
     settings: Object,
     marqueeItems: Array
@@ -55,11 +56,11 @@ const statsData = [
     { label: 'Ha Luas Wilayah', value: props.settings.stat_area },
 ];
 
-const aboutImages = [
-    'https://images.unsplash.com/photo-1596402184320-417e7178b2cd?w=900&q=85',
-    'https://images.unsplash.com/photo-1602867741746-6df80f40b3f6?w=500&q=80',
-    'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=500&q=80'
-];
+const aboutImages = computed(() => [
+    props.about?.image || 'https://images.unsplash.com/photo-1596402184320-417e7178b2cd?w=900&q=85',
+    props.about?.image_2 || 'https://images.unsplash.com/photo-1602867741746-6df80f40b3f6?w=500&q=80',
+    props.about?.image_3 || 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=500&q=80'
+]);
 
 const aboutPills = ['🌿 Alam Hijau', '🐟 Danau Toba', '🎭 Budaya Batak', '🌾 Pertanian', '🧵 Tenun Ulos', '🏘️ Adat Istiadat'];
 </script>
@@ -84,7 +85,7 @@ const aboutPills = ['🌿 Alam Hijau', '🐟 Danau Toba', '🎭 Budaya Batak', '
         
         <Wisata :destinations="wisata" />
         
-        <Gallery />
+        <Gallery :items="gallery" />
         
         <News :news="news" />
         
