@@ -1,21 +1,19 @@
 <?php
-
 namespace Database\Seeders;
-
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
-        \App\Models\User::factory()->create([
-            'name' => 'Admin Desa',
-            'email' => 'admin@pardomuan.com',
-            'password' => bcrypt('password123'),
-        ]);
+        \App\Models\User::firstOrCreate(
+            ['email' => 'admin@pardomuan.com'],
+            [
+                'name' => 'Admin Desa',
+                'password' => Hash::make('password123'),
+            ]
+        );
 
         $this->call([
             WebsiteSeeder::class,
